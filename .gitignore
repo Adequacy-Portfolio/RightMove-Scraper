@@ -9,3 +9,6 @@ storage
 
 # Added by Apify CLI
 .venv
+.eslintrc.json
+.eslintrc
+.eslintrc
