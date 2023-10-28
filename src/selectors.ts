@@ -11,7 +11,9 @@ export const selectors = {
     description:'#root > main > div > div.WJG_W7faYk84nW-6sCBVi > div > article:nth-child(5) > div.OD0O7FWw1TjbTD4sdRi1_ > div > div',
     features:"#root > main > div > div.WJG_W7faYk84nW-6sCBVi > div > article:nth-child(5) > ul >li",
     pictures:"#root > main > div > div.WJG_W7faYk84nW-6sCBVi > div > article:nth-child(5) > div.mtyLjuu2GD7KK4pvhCkS5 > div._3CFvsRHWaaSxrCfBezsRWO >a",
-    floorplan:'#root > main > div > div.WJG_W7faYk84nW-6sCBVi > div > article:nth-child(5) > div.mtyLjuu2GD7KK4pvhCkS5 > div.hU5084-VL7PQNtssjH2DK._234D-kZaWwhd0OYk2lgnix > div > a '
+    floorplan:'#root > main > div > div.WJG_W7faYk84nW-6sCBVi > div > article:nth-child(5) > div.mtyLjuu2GD7KK4pvhCkS5 > div.hU5084-VL7PQNtssjH2DK._234D-kZaWwhd0OYk2lgnix > div > a ',
+    coordinnates: "#root > main > div > div.WJG_W7faYk84nW-6sCBVi > div > div._3Ny7zijTLsxjIRGRFqmF58 > div > a > img",
+    postcodes:"body > script:nth-child(14)"
 
 
 }
