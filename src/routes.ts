@@ -1,5 +1,7 @@
-import { Dataset, createPuppeteerRouter } from 'crawlee';
+import { Dataset, KeyValueStore, createPuppeteerRouter } from 'crawlee';
 import { selectors } from './selectors.js';
+import { FirebaseHandler } from './firebase.js';
+import fs from 'fs'
 
 export const router = createPuppeteerRouter();
 
@@ -29,7 +31,7 @@ router.addHandler('detail', async ({ request, page, log }) => {
     const page_title = await page.title();
     log.info(`${page_title}`, { url: request.loadedUrl });
     const url = new URL(page.url())
-
+    const id = `${url.host}#${url.pathname.split('/')[2]}`
     const property_url = url.origin + url.pathname
 
     const title = await page.$eval(selectors.title, el => el.textContent)
@@ -115,9 +117,32 @@ router.addHandler('detail', async ({ request, page, log }) => {
     })
         .catch(() => null)
 
+    const data = {
+        url: url.href,
+        title,
+        price,
+        date,
+        type,
+        bathroom,
+        tenure,
+        agent,
+        address,
+        bedroom,
+        description,
+        features,
+        floorplan,
+        pictures,
+        coordinnates,
+        postcodes
+    }
 
-    await Dataset.pushData({
-        url: request.loadedUrl,
-        title, price, date, type, bathroom, tenure, agent, address, bedroom, description, features, floorplan, pictures, coordinnates, postcodes
-    });
+    const content = await KeyValueStore.getValue<Array<typeof data>>('properties')
+    await KeyValueStore.setValue('properties', [...content!, data])
+
+    await Dataset.pushData(data);
+
+    const firebaseOptions = JSON.parse(fs.readFileSync("./firebase.config.json").toString())
+    const store = new FirebaseHandler(firebaseOptions)
+    await store.push(data, `properties/${id}`)
+
 });
